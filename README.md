@@ -1,10 +1,10 @@
 # todo_app
 
-A new Flutter project.
+To Do Application Project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project is a starting point for a Flutter application. This project has been completed and the hive has been used as the local storage of this app. Dark mode also is added to this project. 
 
 A few resources to get you started if this is your first Flutter project:
 
