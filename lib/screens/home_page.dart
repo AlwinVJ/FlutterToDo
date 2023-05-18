@@ -5,6 +5,7 @@ import 'package:switcher_button/switcher_button.dart';
 import 'package:todo_app/data/database.dart';
 import 'package:todo_app/themes/theme_modal.dart';
 import 'package:todo_app/utils/addtaskdialogbox.dart';
+import 'package:todo_app/utils/edittaskdialoguebox.dart';
 import 'package:todo_app/utils/todo_tile.dart';
 
 class HomePage extends StatefulWidget {
@@ -71,6 +72,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ));
       db.updateDatabase();
+      _controller.clear();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -94,6 +96,55 @@ class _HomePageState extends State<HomePage> {
             controller: _controller,
             onCancel: () => Navigator.of(context).pop(),
             onSave: saveNewTask,
+          );
+        });
+  }
+
+  // This function saves the edited task
+  void saveEditedTask(int index) {
+    if (_controller.text.isNotEmpty) {
+      setState(() {
+        db.toDoList[index][0] = _controller.text;
+      });
+      Navigator.of(context).pop(); // Close the edit task dialog
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Center(
+            child: Text('The task has been edited successfully'),
+          ),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+      db.updateDatabase();
+      _controller.clear();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Center(child: Text('Please enter a task description')),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
+  // This function edits an existing task
+  void editTask(int index) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return EditTaskBox(
+            controller: _controller,
+            // text:_controller.text,
+            onCancel: () => Navigator.of(context).pop(),
+            onSave: () => saveEditedTask(index),
           );
         });
   }
@@ -193,7 +244,7 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: themeNotifier.isDark ? Colors.yellow : Colors.black,
-          onPressed:createNewTask,
+          onPressed: createNewTask,
           child: Icon(
             Icons.add,
             color: themeNotifier.isDark ? Colors.black : Colors.white,
@@ -207,6 +258,7 @@ class _HomePageState extends State<HomePage> {
               taskCompleted: db.toDoList[index][1],
               onChanged: (value) => checkBoxChanged(value, index),
               deleteFunction: (context) => deleteTask(index),
+              editFunction: () => editTask(index),
             );
           },
         ),

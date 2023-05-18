@@ -10,12 +10,14 @@ class ToDoTile extends StatelessWidget {
   final bool taskCompleted;
   Function(bool?)? onChanged;
   Function(BuildContext)? deleteFunction;
+  VoidCallback editFunction;
   ToDoTile({
     super.key,
     required this.taskName,
     required this.taskCompleted,
     required this.onChanged,
     required this.deleteFunction,
+    required this.editFunction
   });
 
   @override
@@ -63,6 +65,10 @@ class ToDoTile extends StatelessWidget {
                     textBaseline: TextBaseline.ideographic,
                   ),
                 ),
+                const Spacer(),
+                IconButton(
+                  onPressed:editFunction, 
+                  icon:const Icon(Icons.edit)),
               ],
             ),
           ),

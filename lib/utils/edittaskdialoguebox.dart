@@ -4,16 +4,18 @@ import 'package:todo_app/themes/theme_modal.dart';
 import 'package:todo_app/utils/buttons.dart';
 
 // ignore: must_be_immutable
-class AddTaskBox extends StatelessWidget {
+class EditTaskBox extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
   final controller;
+  // final String text;
   VoidCallback onSave;
   VoidCallback onCancel;
-  AddTaskBox({
+  EditTaskBox({
     super.key,
     required this.controller,
     required this.onSave,
     required this.onCancel,
+    // required this.text,
   });
 
   @override
@@ -21,7 +23,8 @@ class AddTaskBox extends StatelessWidget {
     return Consumer(builder: (context, ThemeModal themeNotifier, child) {
       return AlertDialog(
         // backgroundColor: Theme.of(context).primaryColor,
-        backgroundColor: themeNotifier.isDark ? Colors.yellow : Colors.grey.shade400,
+        backgroundColor:
+            themeNotifier.isDark ? Colors.yellow : Colors.grey.shade400,
         content: Container(
           padding: const EdgeInsets.only(top: 5),
           height: 120,
@@ -44,15 +47,15 @@ class AddTaskBox extends StatelessWidget {
                         borderSide:
                             const BorderSide(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.circular(5)),
-                    hintText: 'Add a new task',
-                    hintStyle:const TextStyle(color:Colors.black ),
+                    hintText: 'Edit your task',
+                    hintStyle: const TextStyle(color: Colors.black),
                     suffixIcon: IconButton(
                         onPressed: () {
                           controller.clear();
                         },
                         icon: const Icon(
                           Icons.clear,
-                          color:Colors.black,
+                          color:Colors.black
                         ))),
               ),
               Padding(
