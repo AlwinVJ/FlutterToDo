@@ -250,17 +250,46 @@ class _HomePageState extends State<HomePage> {
             color: themeNotifier.isDark ? Colors.black : Colors.white,
           ),
         ),
-        body: ListView.builder(
-          itemCount: db.toDoList.length,
-          itemBuilder: (context, index) {
-            return ToDoTile(
-              taskName: db.toDoList[index][0],
-              taskCompleted: db.toDoList[index][1],
-              onChanged: (value) => checkBoxChanged(value, index),
-              deleteFunction: (context) => deleteTask(index),
-              editFunction: () => editTask(index),
-            );
-          },
+        body: Column(
+          children: [
+            // Container(
+            //   width: MediaQuery.of(context).size.width - 22,
+            //   margin: const EdgeInsets.symmetric(vertical: 20),
+            //   padding: const EdgeInsets.all(30),
+            //   decoration: BoxDecoration(
+            //       borderRadius: BorderRadius.circular(15),
+            //       color: themeNotifier.isDark ? Colors.yellow : Colors.black),
+            //   child: Center(
+            //     child: () {
+            //       if (_myBox.get('TODOLIST') == null) {
+            //         return const Text(
+            //           'You have 0 tasks to be completed',
+            //           style: TextStyle(fontSize: 21),
+            //         );
+            //       } else {
+            //         return const Text(
+            //           'You have 2 tasks to be completed',
+            //           style: TextStyle(fontSize: 21),
+            //         );
+            //       }
+            //     }(),
+            //   ),
+            // ),
+            Flexible(
+              child: ListView.builder(
+                itemCount: db.toDoList.length,
+                itemBuilder: (context, index) {
+                  return ToDoTile(
+                    taskName: db.toDoList[index][0],
+                    taskCompleted: db.toDoList[index][1],
+                    onChanged: (value) => checkBoxChanged(value, index),
+                    deleteFunction: (context) => deleteTask(index),
+                    editFunction: () => editTask(index),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       );
     });

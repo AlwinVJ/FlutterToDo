@@ -9,7 +9,8 @@ class TodoDatabase {
 
    // If this is the first time ever the app is loading this function will execute
    void createInitialData (){
-    toDoList = [['Add the task in this space',false]];
+    // toDoList = [['Add the task in this space',false]];
+    toDoList = [];
 
     // Remove the initial to-do-item after the user has used the app for the first time ever
     _myBox.delete('TODOLIST');
